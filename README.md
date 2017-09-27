@@ -1,6 +1,6 @@
 # Litecoin Bot
 
-A litecoin tipbot for Reddit. For an introduction and to see how the bot works, read [here](https://www.reddit.com/r/litecoinbot/wiki/index)
+A litecoin tipbot for Reddit. For an introduction and to see how the bot works, read [here](https://github.com/bryan2048/tipbot/wiki)
 
 ## Getting Started
 
