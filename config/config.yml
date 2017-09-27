@@ -1,0 +1,8 @@
+litecoind:
+    account: testaccount
+reddit:
+    client_id: [CLIENTID]
+    client_secret: [CLIENTSECRET]
+    username: [USERNAME]
+    password: [PASSWORD]
+    user_agent: Litecoin Tip Bot 0.1
