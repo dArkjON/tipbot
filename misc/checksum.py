@@ -16,8 +16,8 @@ def check_bc(bc):
 
 
 def validate_address(address):
-	# litecoin address' start with L or 3 (for multisig)
-	first = {"L", 3}
+	# litecoin address' start with L or M (for multisig)
+	first = {"L", "M"}
 	if address[0] not in first:
 		return False
 	# Base58Check
