@@ -234,12 +234,13 @@ def accept(reddit, username):
     for t in pending_tips:
         from_address = get_address(t.sender)
         amount = t.amount - TX_FEE # when we stored the pending tip in the db we added the tx_fee
+        amount = round(amount, 8)
         tip_id = t.tip_id
 
         # send transaction and leave a reply to the 'tip comment'
         pylitecoin.withdraw_from_address(amount, TX_FEE, from_address, address)
-        reddit.comment(t.comment_id).reply("***[VERIFIED]*** */u/{} >>> /u/{} {} LTC [[what?]](https://www.reddit.com/message/compose?to=litecoin_bot&subject=help&message=%2Bhelp)*".format(t.sender, t.recipient, amount))
-        
+        reddit.comment(t.comment_id).reply("***[VERIFIED]*** */u/{} >>> /u/{} {} LTC [[help]](https://www.reddit.com/message/compose?to=litecoin_bot&subject=help&message=%2Bhelp)*".format(t.sender, t.recipient, amount))
+        logging.info("accept(): replied to comment {}".format(t.comment_id))
         # update the record 
         r = list(session.query(Tip).filter(Tip.tip_id == tip_id))
         r[0].status = "ACCEPTED"
@@ -312,7 +313,7 @@ def tip(reddit, sender, recipient, amount, comment_id):
         # accepted and create the transaction
         status = "ACCEPTED"
         pylitecoin.withdraw_from_address(amount, TX_FEE, from_address, to_address)
-        reddit.comment(comment_id).reply("***[VERIFIED]*** */u/{} >>> /u/{} {} LTC [[what?]](https://www.reddit.com/message/compose?to=litecoin_bot&subject=help&message=%2Bhelp)*".format(sender, recipient, amount))
+        reddit.comment(comment_id).reply("***[VERIFIED]*** */u/{} >>> /u/{} {} LTC [[help]](https://www.reddit.com/message/compose?to=litecoin_bot&subject=help&message=%2Bhelp)*".format(sender, recipient, amount))
     else:
         # recipient hasn't registered an accout yet
         # mark tip as pending and msg them with instructions
@@ -322,12 +323,13 @@ def tip(reddit, sender, recipient, amount, comment_id):
         # when we store a pending tip in the db we also
         # have to add the pending transaction fee so that
         # it isn't spent
-        amount+= TX_FEE
+        amount += TX_FEE
+        amount = round(amount, 8)
 
         logging.info("tip(): {} sent tip to {} [PENDING]".format(sender, recipient))
         template = env.get_template('yougottip.tpl')
         s = "You just got a tip!"
-        m =template.render(username=recipient, sender=sender, amount=amount)
+        m =template.render(username=recipient, sender=sender, amount=amount - 0.001)
         send_message(reddit, recipient, s, m)
 
     # add tip to db

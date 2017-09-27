@@ -94,9 +94,9 @@ class TipBot(object):
                     logging.info("TipBot::parse_message(): syntax error")
                     return
 
-                if amount == "all":
+                if amount.lower() == "all":
                     tipbot_action.withdraw_all(self.reddit, user, address)
-                elif c_type in self.fiat:
+                elif c_type.lower() in self.fiat:
                     # convert fiat to ltc value
                     ltc_amount = price.convert_to_ltc(float(amount), c_type)
                     tipbot_action.withdraw(self.reddit, user, address, ltc_amount)
@@ -143,8 +143,15 @@ class TipBot(object):
             
         if user == parent_author:
             # user tipped themself, ignore
-            logging.info("TipBot::parse_comment(): {} tryed to tip themself}".format(user))
+            logging.info("TipBot::parse_comment(): {} tryed to tip themself".format(user))
             err_msg = "user can't tip themself"
+            tipbot_action.error(self.reddit, user, err_msg)
+            return 
+
+        if parent_author == self.username:
+            # user tipped bot, ignore
+            logging.info("TipBot::parse_comment(): {} tryed to tip themself".format(user))
+            err_msg = "thanks, but I don't accept tips"
             tipbot_action.error(self.reddit, user, err_msg)
             return 
 
@@ -152,7 +159,7 @@ class TipBot(object):
         amount = match.group(5)
         c_type = match.group(6)
             
-        if c_type in self.fiat:
+        if c_type.lower() in self.fiat:
             # convert fiat to ltc value
             ltc_amount = price.convert_to_ltc(float(amount), c_type)
             tipbot_action.tip(self.reddit, user, parent_author, ltc_amount, comment)
