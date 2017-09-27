@@ -1,4 +1,4 @@
-Hello {{ username | replace('_', '\_') }}
+Hello {{ username | replace('_', '\_') }},
 
 You just sent {{ amount }} LTC to {{ address }}
 
