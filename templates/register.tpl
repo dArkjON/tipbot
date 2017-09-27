@@ -8,11 +8,7 @@ Once you have some Litecoin in your account, tipping is as simple as leaving thi
 
     +/u/litecoin_bot tip [AMOUNT]
 
-    +/u/litecoin_bot tip 0.25
-
-^(Tip the comment you're replying to 0.25 LTC)
-
-You can also withdraw coins, see your balances, and more by sending a private message to litecoin_bot.
+You can also withdraw coins, see your balances, and more by sending a private message to /u/litecoin_bot.
 
 Happy tipping!
 
