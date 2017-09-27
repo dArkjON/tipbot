@@ -45,3 +45,9 @@ You should create a dedicated Reddit account for your bot.  Open config/config.y
 3. Ensure Reddit authenticates configured user.
 
 4. Execute ```python3 main.py```. The command will not return for as long as the bot is running.
+
+### Donate
+
+BTC: 1Jv2HHW389MjuRW4E5b76yW81zqR6Az6b6
+
+LTC: LbHb4Qn6xUzEXWcTTw7SjS3YDs2Hw6sXpi
